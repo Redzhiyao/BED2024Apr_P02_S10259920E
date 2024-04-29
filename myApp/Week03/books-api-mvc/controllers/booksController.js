@@ -10,25 +10,25 @@ const getAllBooks = async (req, res) => {
   }
 };
 
-const getBookById = async (req, res) => {
+const getBooksId = async (req, res) => {
   const bookId = parseInt(req.params.id);
   try {
-    const book = await Book.getBookById(bookId);
+    const book = await Book.getBooksId(bookId);
     if (!book) {
-      return res.status(404).send("Book not found");
+      return res.status(404).send("Book not Found");
     }
     res.json(book);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error retrieving book");
+    res.status(500).send("Error retrieving Book");
   }
 };
 
 const createBook = async (req, res) => {
   const newBook = req.body;
   try {
-    const createdBook = await Book.createBook(newBook);
-    res.status(201).json(createdBook);
+    const createdbook = await Book.createBook(newBook);
+    res.status(201).json(Icreatedbook);
   } catch (error) {
     console.error(error);
     res.status(500).send("Error creating book");
@@ -47,7 +47,7 @@ const updateBook = async (req, res) => {
     res.json(updatedBook);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error updating book");
+    res.status(500).send("Error updating Book");
   }
 };
 
@@ -62,14 +62,14 @@ const deleteBook = async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error deleting book");
+    res.status(500).send("Error deleting Book");
   }
 };
 
 module.exports = {
   getAllBooks,
   createBook,
-  getBookById,
+  getBooksId,
   updateBook,
-  deleteBook,
+  deleteBook,
 };
