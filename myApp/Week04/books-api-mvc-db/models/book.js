@@ -1,5 +1,5 @@
-const sql = require("mssql"); // Add this line to import the sql module
-const dbConfig = require("../dbConfig"); // Adjust the path as necessary
+const sql = require("mssql");
+const dbConfig = require("../dbConfig");
 
 class Book {
   constructor(id, title, author) {
@@ -11,7 +11,7 @@ class Book {
   static async getAllBooks() {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = 'SELECT * FROM Book;' // Replace with your actual table name
+    const sqlQuery = `SELECT * FROM Books`; // Replace with your actual table name
 
     const request = connection.request();
     const result = await request.query(sqlQuery);
@@ -26,7 +26,7 @@ class Book {
   static async getBookById(id) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = 'SELECT * FROM Book WHERE id = @id;' // Parameterized query
+    const sqlQuery = `SELECT * FROM Books WHERE id = @id`; // Parameterized query
 
     const request = connection.request();
     request.input("id", id);
@@ -42,10 +42,11 @@ class Book {
         )
       : null; // Handle book not found
   }
+
   static async createBook(newBookData) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = 'INSERT INTO Book (title, author) VALUES (@title, @author); SELECT SCOPE_IDENTITY() AS id;'; // Retrieve ID of inserted record
+    const sqlQuery = `INSERT INTO Books (title, author) VALUES (@title, @author); SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
 
     const request = connection.request();
     request.input("title", newBookData.title);
@@ -62,7 +63,7 @@ class Book {
   static async updateBook(id, newBookData) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = 'UPDATE Book SET title = @title, author = @author WHERE id = @id'; // Parameterized query
+    const sqlQuery = `UPDATE Books SET title = @title, author = @author WHERE id = @id`; // Parameterized query
 
     const request = connection.request();
     request.input("id", id);
@@ -79,7 +80,7 @@ class Book {
   static async deleteBook(id) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = 'DELETE FROM Book WHERE id = @id'; // Parameterized query
+    const sqlQuery = `DELETE FROM Books WHERE id = @id`; // Parameterized query
 
     const request = connection.request();
     request.input("id", id);
@@ -91,4 +92,4 @@ class Book {
   }
 }
 
-module.exports = Book;
+module.exports = Book;
